@@ -9,8 +9,11 @@ import Foundation
 
 public func listContents(atPath: String) -> [String] {
     let fm = FileManager();
-    let result = try! fm.contentsOfDirectory(atPath: atPath)
-    return result
+    if let result = try? fm.contentsOfDirectory(atPath: atPath) {
+        return result
+    } else {
+        return []
+    }
 }
 
 public func fileExists(atPath: String) -> (fileExists: Bool, isDir: Bool){
