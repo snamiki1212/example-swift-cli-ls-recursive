@@ -7,8 +7,8 @@
 
 import Foundation
 
-//let path = "/Users/shun/.ghq/sandbox/folder"
-let path = "/Users/shun/.ghq/sandbox/folder/dir_b/dir_e"
 
+let path = CommandLine.arguments[1]
+//let path = "/Users/shun/.ghq/sandbox/folder"
 
 lsr(path);
