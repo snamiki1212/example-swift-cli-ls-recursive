@@ -14,17 +14,24 @@ let SUFFIX_OF_END     = "└─"
 let SUFFIX_OF_PADDING = "  "
 
 func lsr(_ path: String){
-    doLsr(path);
+    let (numOfDirs, numOfFiles) = doLsr(path);
+    print("\(numOfDirs) directories, \(numOfFiles) files");
 }
 
-private func doLsr(_ path: String, _ suffixForPrinter: String = "") {
-    let (fileExits, isDir) = fileExists(atPath: path);
+private func doLsr(_ path: String, _ suffixForPrinter: String = "") -> (numOfDirs: Int, numOfFiles: Int){
+    let (fileExits, isDir) = existFile(atPath: path);
+    
+    // Guard
+    if !fileExits { return (0, 0)}
     
     // Base case
-    if !fileExits { return }
+    let isFile = !isDir
+    if isFile { return (0, 1) }
     
     // Recursive case
     let contents = listContents(atPath: path)
+    var thisSumOfDirs = 0;
+    var thisSumOfFiles = 0;
     for (idx, content) in contents.enumerated() {
         let isLast = contents.count - 1 == idx
         
@@ -34,15 +41,19 @@ private func doLsr(_ path: String, _ suffixForPrinter: String = "") {
         print(thisSuffix, content);
         
         // ls recursively
-        if isDir {
-            let nextSuffix = isLast
-                ? SUFFIX_OF_PADDING + SUFFIX_OF_PADDING
-                : SUFFIX_OF_MIDDLE + SUFFIX_OF_PADDING
-            let nextSuffixForPrinter = suffixForPrinter + nextSuffix
-            let nextPath = path + "/" + content
-            doLsr(nextPath, nextSuffixForPrinter)
-        }
+        let nextSuffix = isLast
+            ? SUFFIX_OF_PADDING + SUFFIX_OF_PADDING
+            : SUFFIX_OF_MIDDLE + SUFFIX_OF_PADDING
+        let nextSuffixForPrinter = suffixForPrinter + nextSuffix
+        let nextPath = path + "/" + content
+        let result = doLsr(nextPath, nextSuffixForPrinter)
         
+        // Count up nums
+        let (sumOfDirs, sumfOfFiles) = result
+        thisSumOfDirs += sumOfDirs + 1
+        thisSumOfFiles += sumfOfFiles
     }
+    
+    return (thisSumOfDirs, thisSumOfFiles)
 }
 
