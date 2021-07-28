@@ -7,5 +7,5 @@
 
 import Foundation
 
-print("Hello, World!")
-
+let path = "/Users/shun/.ghq/ios/CommandLSR"
+lsr(path);
