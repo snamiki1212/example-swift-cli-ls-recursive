@@ -32,6 +32,10 @@ $ ./lsr .
 │   │       └─ xcschemes
 │   │           └─ xcschememanagement.plist
 ...
+│   ├─ COMMIT_EDITMSG
+│   └─ FETCH_HEAD
+└─ lsr
+93 directories, 116 files
 ```
 
 ## LICENSE
