@@ -14,15 +14,21 @@ let SUFFIX_OF_END     = "└─"
 let SUFFIX_OF_PADDING = "  "
 
 func lsr(_ path: String){
-    let (numOfDirs, numOfFiles) = doLsr(path);
+    // Guard
+    let (fileExits, _) = getFileExistsAndIsDir(atPath: path);
+    if !fileExits {
+        print("Cannot find path(path: ", path, ")");
+        return;
+    }
+    
+    // run
+    let (_numOfDirs, numOfFiles) = doLsr(path);
+    let numOfDirs = _numOfDirs - 1 // decrement because number of top dir has to be removed
     print("\(numOfDirs) directories, \(numOfFiles) files");
 }
 
 private func doLsr(_ path: String, _ suffixForPrinter: String = "") -> (numOfDirs: Int, numOfFiles: Int){
-    let (fileExits, isDir) = existFile(atPath: path);
-    
-    // Guard
-    if !fileExits { return (0, 0)}
+    let (_, isDir) = getFileExistsAndIsDir(atPath: path);
     
     // Base case
     let isFile = !isDir
@@ -30,7 +36,7 @@ private func doLsr(_ path: String, _ suffixForPrinter: String = "") -> (numOfDir
     
     // Recursive case
     let contents = listContents(atPath: path)
-    var thisSumOfDirs = 0;
+    var thisSumOfDirs = 1; // increment num of this dir
     var thisSumOfFiles = 0;
     for (idx, content) in contents.enumerated() {
         let isLast = contents.count - 1 == idx
@@ -50,7 +56,7 @@ private func doLsr(_ path: String, _ suffixForPrinter: String = "") -> (numOfDir
         
         // Count up nums
         let (sumOfDirs, sumfOfFiles) = result
-        thisSumOfDirs += sumOfDirs + 1
+        thisSumOfDirs += sumOfDirs
         thisSumOfFiles += sumfOfFiles
     }
     

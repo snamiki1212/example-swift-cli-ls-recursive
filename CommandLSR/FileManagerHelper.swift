@@ -16,7 +16,7 @@ public func listContents(atPath: String) -> [String] {
     }
 }
 
-public func existFile(atPath: String) -> (fileExists: Bool, isDir: Bool){
+public func getFileExistsAndIsDir(atPath: String) -> (fileExists: Bool, isDir: Bool){
     let fm = FileManager();
     var isDir: ObjCBool = false
     let exits = fm.fileExists(atPath: atPath, isDirectory: &isDir);
