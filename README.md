@@ -4,7 +4,22 @@ CLI `ls -R` with Swift.
 
 https://user-images.githubusercontent.com/26793088/127398754-bc960eac-caf0-422a-a4de-87f5c6d61c55.mov
 
+## How to compile
+
+```zsh
+$ xcrun -sdk macosx \
+  swiftc \
+    CommandLSR/main.swift \
+    CommandLSR/lsr.swift \
+    CommandLSR/FileManagerHelper.swift \
+  -o lsr
+$ ls lsr
+lsr
+```
+
 ## Usage
+
+Note that need to compile before doing usage.
 
 ```zsh
 # man: lsr <path>
@@ -17,16 +32,6 @@ $ ./lsr .
 │   │       └─ xcschemes
 │   │           └─ xcschememanagement.plist
 ...
-```
-
-## How to compile
-
-```zsh
-$ cd CommandLSR
-$ xcrun -sdk macosx swiftc main.swift lsr.swift FileManagerHelper.swift -o ../lsr
-$ cd ../
-$ ls lsr
-lsr
 ```
 
 ## LICENSE
